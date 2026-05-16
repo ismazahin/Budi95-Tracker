@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Background circle -->
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M50,5 A45,45,0,1,1,49.99,5 Z"/>
+    <!-- Fuel pump icon -->
+    <path
+        android:fillColor="#FFD600"
+        android:pathData="M35,30 L35,75 L65,75 L65,30 Z"/>
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M40,35 L60,35 L60,55 L40,55 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M65,35 L72,38 L72,55 L65,55 Z"/>
+    <!-- RM text -->
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M43,40 L43,50 M43,45 L50,45 M50,40 L50,50 M53,40 L53,50 L58,45 L53,50"/>
+</vector>
