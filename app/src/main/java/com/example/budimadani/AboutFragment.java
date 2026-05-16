@@ -20,7 +20,7 @@ public class AboutFragment extends Fragment {
     private static final String AUTHOR_NAME  = "Isma Zahin Bin Amiruddin";
     private static final String MATRIC_NO    = "2025180017";
     private static final String COURSE       = "Mobile Technology (ICT602)";
-    private static final String GITHUB_URL   = "https://github.com/ismazahin/Budi95-Tracker.git";
+    private static final String GITHUB_URL   = "https://github.com/ismazahin/Budi95-Tracker";
     // =============================================
 
     @Nullable

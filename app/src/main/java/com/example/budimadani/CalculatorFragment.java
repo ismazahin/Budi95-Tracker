@@ -18,6 +18,17 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+// New imports for the API
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+
 import java.util.Locale;
 
 public class CalculatorFragment extends Fragment {
@@ -40,12 +51,13 @@ public class CalculatorFragment extends Fragment {
     private static final String DIESEL = "Diesel";
     private static final String RON97  = "RON 97";
 
-    // Subsidized & Base Rates
-    private static final double RON95_BASE = 3.87;
-    private static final double RON95_SUB  = 1.99;
+    // Base Rates (No longer 'final' so the API can update them)
+    private double RON95_BASE = 3.87;
+    private double DIESEL_BASE = 4.87;
+    private double RON97_BASE  = 5.35;
 
-    private static final double DIESEL_BASE = 4.87;
-    private static final double RON97_BASE  = 5.35;
+    // Subsidized Rate stays fixed
+    private static final double RON95_SUB  = 1.99;
 
     @Nullable
     @Override
@@ -56,6 +68,10 @@ public class CalculatorFragment extends Fragment {
         initViews(view);
         setupSpinner();
         setupListeners();
+
+        // Fetch the live prices from data.gov.my as soon as the screen loads!
+        fetchLiveFuelPrices();
+
         return view;
     }
 
@@ -117,6 +133,58 @@ public class CalculatorFragment extends Fragment {
         btnReset.setOnClickListener(v -> resetForm());
     }
 
+    // ==========================================
+    // API NETWORK CALL
+    // ==========================================
+    private void fetchLiveFuelPrices() {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.data.gov.my/data-catalogue?id=fuelprice&limit=1")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() ->
+                            Toast.makeText(getContext(), "Failed to fetch live prices. Using offline rates.", Toast.LENGTH_SHORT).show()
+                    );
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseData = response.body().string();
+                    try {
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        JSONObject latestData = jsonArray.getJSONObject(0);
+
+                        double liveRon95 = latestData.getDouble("ron95");
+                        double liveRon97 = latestData.getDouble("ron97");
+                        double liveDiesel = latestData.getDouble("diesel");
+
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                RON95_BASE = liveRon95;
+                                RON97_BASE = liveRon97;
+                                DIESEL_BASE = liveDiesel;
+
+                                Toast.makeText(getContext(), "Fuel prices updated to today's rates!", Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    // ==========================================
+    // CALCULATION LOGIC
+    // ==========================================
     private void calculateTransaction() {
         String inputStr = etInputValue.getText() != null ? etInputValue.getText().toString().trim() : "";
 
