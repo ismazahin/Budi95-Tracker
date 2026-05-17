@@ -139,18 +139,15 @@ public class CalculatorFragment extends Fragment {
     private void fetchLiveFuelPrices() {
         OkHttpClient client = new OkHttpClient();
 
+        // UPDATED URL: Sort by newest date and fetch 5 rows just to be safe
         Request request = new Request.Builder()
-                .url("https://api.data.gov.my/data-catalogue?id=fuelprice&limit=1")
+                .url("https://api.data.gov.my/data-catalogue?id=fuelprice&sort=-date&limit=3")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(() ->
-                            Toast.makeText(getContext(), "Failed to fetch live prices. Using offline rates.", Toast.LENGTH_SHORT).show()
-                    );
-                }
+                // Ignore if no internet, it will use offline rates
             }
 
             @Override
@@ -159,20 +156,26 @@ public class CalculatorFragment extends Fragment {
                     String responseData = response.body().string();
                     try {
                         JSONArray jsonArray = new JSONArray(responseData);
-                        JSONObject latestData = jsonArray.getJSONObject(0);
 
-                        double liveRon95 = latestData.getDouble("ron95");
-                        double liveRon97 = latestData.getDouble("ron97");
-                        double liveDiesel = latestData.getDouble("diesel");
+                        // Loop through the data to find the actual price, skipping the "weekly change" rows
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject latestData = jsonArray.getJSONObject(i);
+                            double liveRon95 = latestData.getDouble("ron95");
 
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(() -> {
-                                RON95_BASE = liveRon95;
-                                RON97_BASE = liveRon97;
-                                DIESEL_BASE = liveDiesel;
+                            // Actual fuel prices will always be over RM 1.00. (Weekly changes are tiny like 0.08)
+                            if (liveRon95 > 1.0) {
+                                double liveRon97 = latestData.getDouble("ron97");
+                                double liveDiesel = latestData.getDouble("diesel");
 
-                                Toast.makeText(getContext(), "Fuel prices updated to today's rates!", Toast.LENGTH_SHORT).show();
-                            });
+                                if (getActivity() != null) {
+                                    getActivity().runOnUiThread(() -> {
+                                        RON95_BASE = liveRon95;
+                                        RON97_BASE = liveRon97;
+                                        DIESEL_BASE = liveDiesel;
+                                    });
+                                }
+                                break; // Stop looping once we found the correct row!
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -260,6 +260,7 @@
                             android:gravity="end">
 
                             <TextView
+                                android:id="@+id/tvHomeRon95Price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="RM 3.87 / litre"
@@ -310,6 +311,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvHomeDieselPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="RM 4.87 / litre"
@@ -350,6 +352,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvHomeRon97Price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="RM 5.35 / litre"

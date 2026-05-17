@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.BudiMadani" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.BudiMadaniApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary_blue</item>
         <item name="colorPrimaryDark">@color/primary_blue_dark</item>
         <item name="colorAccent">@color/accent_yellow</item>
@@ -10,7 +10,7 @@
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="31">@drawable/logo_malaysia_madani_sahaja_615x1024</item>
         <item name="android:windowSplashScreenBackground" tools:targetApi="31">@color/bg_light</item>
     </style>
-
+    <style name="Theme.BudiMadaniApp" parent="Base.Theme.BudiMadaniApp" />
     <!-- Yellow Button Style -->
     <style name="YellowButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/accent_yellow</item>
