@@ -18,7 +18,7 @@
 
     <!-- Text -->
     <color name="text_white">#FFFFFF</color>
-    <color name="text_dark">#0D1B3E</color>
+    <color name="text_dark">#212121</color> <!-- A very dark grey/black -->
     <color name="text_medium">#37474F</color>
     <color name="text_light">#546E7A</color>
     <color name="text_yellow">#FFD600</color>
