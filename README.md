@@ -1,14 +1,25 @@
-# BUDI MADANI Calculator 🇲🇾⛽
+# 🚗 Budi95 Tracker 🇲🇾⛽
 
-A Smart Petrol Cost Calculator for Malaysia with BUDI MADANI RON95 fuel subsidy calculation.
+A Smart Petrol Cost Calculator for Malaysia with live API integration and BUDI MADANI RON95 fuel subsidy calculation.
 
 ---
 
-## 📱 Features
+## 🚀 Live Demo & Download
 
-- **Home** — Complete information about BUDI MADANI RON95 subsidy programme
-- **Calculator** — Accurate petrol cost calculator with step-by-step BUDI MADANI rebate breakdown
-- **About** — Author information, app details, and GitHub link
+- **📥 Download the App:** [Click here to download the latest APK](https://github.com/ismazahin/Budi95-Tracker/releases)
+- **🌐 Run in Browser:** *(Optional: If you created an Appetize.io link earlier, paste it here so your lecturer can test it instantly!)*
+
+---
+
+## ✨ Features
+
+- 🌐 **Live Market Data:** Integrates directly with the official `data.gov.my` API using `OkHttp3` to fetch real-time daily fuel prices.
+- 🧮 **Smart Calculation Engine:** Accurate petrol cost calculator with step-by-step BUDI MADANI rebate breakdown. Input either Litres (L) or Total Amount (RM).
+- 🎨 **Modern UI/UX:** Includes a custom Malaysia Madani splash screen (with Android 12+ API 31 seamless loading) and custom adaptive launcher icons.
+- 📱 **App Navigation:**
+  - **Home** — Complete information about the BUDI MADANI programme.
+  - **Calculator** — The core transaction and savings engine.
+  - **About** — Developer information and project details.
 
 ---
 
@@ -16,55 +27,33 @@ A Smart Petrol Cost Calculator for Malaysia with BUDI MADANI RON95 fuel subsidy 
 
 | Step | Formula |
 |------|---------|
-| Step 1 | Total Petrol Cost = Fuel Usage × Petrol Price per Litre |
+| Step 1 | Total Petrol Cost = Fuel Usage × Live Petrol Price per Litre |
 | Step 2 | BUDI Rebate = Fuel Usage × RM 1.99 *(RON95 eligible users only)* |
 | Step 3 | Final Payable = Total Cost − BUDI Rebate |
 
-### Sample Calculation
-- Petrol type: RON95 @ RM 4.27/L
+### Sample Calculation (Example Rates)
+- Petrol type: RON95 @ RM 3.87/L *(Fetched live from API)*
 - Fuel usage: 40 litres
 - BUDI MADANI eligible: YES
 
 | | |
 |--|--|
-| Total Cost | 40 × RM 4.27 = **RM 170.80** |
+| Total Cost | 40 × RM 3.87 = **RM 154.80** |
 | BUDI Rebate | 40 × RM 1.99 = **RM 79.60** |
-| You Pay | RM 170.80 − RM 79.60 = **RM 91.20** |
-
----
-
-## 📋 Petrol Prices (2025)
-
-| Type | Price | BUDI MADANI |
-|------|-------|-------------|
-| RON 95 | RM 4.27/L | ✅ RM 1.99/L subsidy |
-| RON 97 | RM 5.35/L | ❌ Not eligible |
-| Diesel | RM 3.35/L | ❌ Not eligible |
+| You Pay | RM 154.80 − RM 79.60 = **RM 75.20** |
 
 ---
 
 ## 🛠️ Setup Instructions
 
 1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/budi-madani-app.git
-   ```
-2. Open in **Android Studio Hedgehog** or newer
-3. Let Gradle sync
-4. Update `AboutFragment.java` with your personal details:
-   ```java
-   private static final String AUTHOR_NAME = "Your Full Name";
-   private static final String MATRIC_NO   = "Your Matric Number";
-   private static final String COURSE      = "Your Course Name";
-   private static final String GITHUB_URL  = "https://github.com/yourrepo";
-   ```
-5. Run on an emulator or physical device (API 24+)
-
+   ```bash
+   git clone [https://github.com/ismazahin/Budi95-Tracker.git](https://github.com/ismazahin/Budi95-Tracker.git)
 ---
 
 ## 📐 Requirements
 
-- Android Studio Hedgehog (2023.1.1) or newer
+- IDE: Android Studio Hedgehog (2023.1.1) or newer
 - Min SDK: API 24 (Android 7.0)
 - Target SDK: API 34 (Android 14)
 
