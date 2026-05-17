@@ -1,5 +1,7 @@
 package com.example.budimadani; // Make sure this matches your exact package name!
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,15 @@ public class HomeFragment extends Fragment {
         tvHomeRon97Price = view.findViewById(R.id.tvHomeRon97Price);
         tvHomeDieselPrice = view.findViewById(R.id.tvHomeDieselPrice);
 
+        // --- NEW: Link the button and make it clickable! ---
+        View btnOfficialWebsite = view.findViewById(R.id.btnOfficialWebsite);
+        btnOfficialWebsite.setOnClickListener(v -> {
+            // This is the official Malaysian government portal for Budi Madani
+            String url = "https://budimadani.gov.my";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        });
         // Fetch the live prices when the Home screen opens
         fetchHomeLivePrices();
 
